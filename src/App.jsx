@@ -45,11 +45,6 @@ export default function App() {
     setArticleQueue(articleQueue.filter((item) => item.id != targetArticle.id))
   }
 
-  function removeFromSavedArticles(targetArticle) {
-    const targetIndex = savedArticles.indexOf(targetArticle)
-    savedArticles.splice(targetIndex, 1)
-  }
-
   /*-----State Ayarlama Fonksiyonları-------------------------------------------*/
 
   function favorite(id) {
@@ -60,9 +55,7 @@ export default function App() {
     } else {
       favoritedArticles.push(targetArticle)
     }
-
     setArticleQueue([...articleQueue])
-    setArticleQueue([...savedArticles])
   }
 
   function archive(id) {
@@ -71,7 +64,6 @@ export default function App() {
     archivedArticles.push(targetArticle)
 
     setArticleQueue([...articleQueue])
-    setArticleQueue([...savedArticles])
   }
 
   function trash(id) {
@@ -82,7 +74,6 @@ export default function App() {
       favoritedArticles.splice(targetIndex, 1)
     }
     trashedArticles.push(targetArticle)
-    setArticleQueue([...savedArticles])
   }
 
   function toggleExpand(id) {
