@@ -17,7 +17,12 @@ export default function App() {
       <Article
         articleData={articleData}
         key={articleData.id}
-        fm={[favorite, archive, trash, toggleExpand]}
+        fm={[
+          { favorite: favorite },
+          { archive: archive },
+          { trash: trash },
+          { toggleExpand: toggleExpand },
+        ]}
       />
     )
   })
