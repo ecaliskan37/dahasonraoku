@@ -8,7 +8,10 @@ export default function Article(props) {
     : undefined
 
   const handleClick = (buttonid, id) => {
-    let func = eval(props.fm.find((item) => item.name == buttonid)(id))
+    let list = props.fm
+    console.log(list)
+    console.log(list.find((item) => item.name == buttonid))
+    list.find((item) => item.name == buttonid)(id)
   }
 
   return (
