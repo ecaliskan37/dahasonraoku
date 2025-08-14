@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './styles.css'
 import Header from './components/Header'
 import Article from './components/Article'
@@ -9,8 +9,12 @@ import trashedArticles from './data/trashedArticles'
 
 export default function App() {
   const [articleQueue, setArticleQueue] = useState(savedArticles)
+  const [stats, setStats] = useState({})
+  // const stats = getStats()
 
-  const stats = getStats()
+  useEffect(() => {
+    setStats(getStats())
+  }, [articleQueue])
 
   const articleComponents = articleQueue.map((articleData) => {
     return (
@@ -44,15 +48,14 @@ export default function App() {
   }
 
   function removeFromSavedArticles(targetArticle) {
-    // const targetIndex = articleQueue.indexOf(targetArticle)
-    // savedArticles.splice(targetIndex, 1)
-    console.log(targetArticle)
-    setArticleQueue(articleQueue.filter((item) => item.id != targetArticle.id))
+    const targetIndex = articleQueue.indexOf(targetArticle)
+    savedArticles.splice(targetIndex, 1)
   }
 
   /*-----State Ayarlama Fonksiyonları-------------------------------------------*/
 
   function favorite(id) {
+    console.log(id)
     const targetArticle = getTargetArticle(id)
     if (favoritedArticles.includes(targetArticle)) {
       const targetIndex = favoritedArticles.indexOf(targetArticle)
@@ -60,15 +63,14 @@ export default function App() {
     } else {
       favoritedArticles.push(targetArticle)
     }
-    setArticleQueue([...articleQueue])
+    setStats(getStats())
   }
 
   function archive(id) {
     const targetArticle = getTargetArticle(id)
     removeFromSavedArticles(targetArticle)
     archivedArticles.push(targetArticle)
-
-    setArticleQueue([...articleQueue])
+    setArticleQueue([...savedArticles])
   }
 
   function trash(id) {
@@ -79,6 +81,7 @@ export default function App() {
       favoritedArticles.splice(targetIndex, 1)
     }
     trashedArticles.push(targetArticle)
+    setArticleQueue([...savedArticles])
   }
 
   function toggleExpand(id) {
